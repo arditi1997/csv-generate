@@ -1,0 +1,9 @@
+csv:
+  file-name: "temp.csv"
+  object-created:
+    directory-of-java-fIle: "/Users/arditmete/DemoCsv/src/main/java/sella/democsv"
+    package-name: "csvClassGenerated"
+    package-route: "sella.democsv.csvClassGenerated"
+    name: "CSVObject"
+
+
