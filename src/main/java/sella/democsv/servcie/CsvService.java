@@ -1,14 +1,13 @@
 package sella.democsv.servcie;
 
-import sella.democsv.csvClassGenerated.CSVObject;
+import sella.democsv.csvClassGenerated.FirstCsvObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 public interface CsvService {
 
-     void setCsvData(List<CSVObject> csvObjects) throws IOException;
-     void createPojoFromCsvHeader(File csvInputFile, String directoryOfjavaFile, String packageName, String packageRoute, String className);
+     void setCsvData(List<FirstCsvObject> csvObjects) throws IOException;
+     void createPojoFromCsvHeader(String[] args);
     void createNewCsv(String[] args) throws IOException;
 }

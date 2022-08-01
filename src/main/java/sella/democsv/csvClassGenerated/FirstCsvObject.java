@@ -1,5 +1,5 @@
 package sella.democsv.csvClassGenerated;
-public class CSVObject {
+public class FirstCsvObject {
 		 private String id;
 		 private String name;
 		 private String email;

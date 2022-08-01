@@ -9,6 +9,8 @@ import sella.democsv.servcie.impl.CsvServiceImpl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 public class DemoCsvApplication {
@@ -24,14 +26,8 @@ public class DemoCsvApplication {
     }
     public static void main(String[] args) throws IOException {
         SpringApplication.run(DemoCsvApplication.class, args);
-//        args = new String[] {"/Users/arditmete/Desktop/object.csv"};
-        csvService.createPojoFromCsvHeader(new File(args[0]),
-                applicationProperties.getDirectoryOfJavaFIle(),
-                applicationProperties.getPackageName(),
-                applicationProperties.getPackageRoute(),
-                applicationProperties.getName()
-        );
-
+        args = new String[] {"/Users/arditmete/Desktop/temp.csv", "/Users/arditmete/Desktop/temp2.csv" };
+        csvService.createPojoFromCsvHeader(args);
         csvService.createNewCsv(args);
     }
 }
