@@ -51,6 +51,7 @@ public class CsvServiceImpl implements CsvService {
                 new NotNull(), // email
                 new NotNull(), // Country
                 new NotNull(), // age
+                new NotNull(), // position
         };
         return processors;
     }
@@ -85,7 +86,8 @@ public class CsvServiceImpl implements CsvService {
                 fields[1].getName(),
                 fields[2].getName(),
                 fields[3].getName(),
-                fields[4].getName()};
+                fields[4].getName(),
+                fields[5].getName()};
         csvWriter.writeHeader(csvHeader);
         List<SecondCsvObject> newCsvObjects = mapNewCsvObject(csvObjects);
         for (SecondCsvObject newCsvObject : newCsvObjects) {
@@ -189,17 +191,18 @@ public class CsvServiceImpl implements CsvService {
         csvObjects.forEach(csvObject -> {
             SecondCsvObject newCsvObject = new SecondCsvObject();
             newCsvObject.setAges(String.valueOf(Integer.parseInt(csvObject.getAge() )* 100));
-            newCsvObject.setName(csvObject.getName());
-            newCsvObject.setId(csvObject.getId());
+            newCsvObject.setNames(csvObject.getName());
+            newCsvObject.setIds(csvObject.getId());
             newCsvObject.setEmails(csvObject.getEmail());
-            newCsvObject.setCountry(csvObject.getCountry());
+            newCsvObject.setCountrys(csvObject.getCountrys());
+            newCsvObject.setPositions(csvObject.getPosition());
             newCsvObjects.add(newCsvObject);
         });
         return newCsvObjects;
     }
 
     private String getCsvClassName(int index){
-        if(index == 0){
+        if(index == 1){
             return applicationProperties.getFirstCsvName();
         }else {
             return applicationProperties.getSecondCsvName();

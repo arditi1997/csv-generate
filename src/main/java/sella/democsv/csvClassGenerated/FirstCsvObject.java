@@ -3,8 +3,9 @@ public class FirstCsvObject {
 		 private String id;
 		 private String name;
 		 private String email;
-		 private String country;
+		 private String countrys;
 		 private String age;
+		 private String position;
 
 		public String  getId(){
 			return this.id;
@@ -27,11 +28,11 @@ public class FirstCsvObject {
 			 this.email = email;
 		}
 
-		public String  getCountry(){
-			return this.country;
+		public String  getCountrys(){
+			return this.countrys;
 		}
-		public void  setCountry(String country){
-			 this.country = country;
+		public void  setCountrys(String countrys){
+			 this.countrys = countrys;
 		}
 
 		public String  getAge(){
@@ -39,6 +40,13 @@ public class FirstCsvObject {
 		}
 		public void  setAge(String age){
 			 this.age = age;
+		}
+
+		public String  getPosition(){
+			return this.position;
+		}
+		public void  setPosition(String position){
+			 this.position = position;
 		}
 
 }

@@ -1,23 +1,24 @@
 package sella.democsv.csvClassGenerated;
 public class SecondCsvObject {
-		 private String id;
-		 private String name;
+		 private String ids;
+		 private String names;
 		 private String emails;
-		 private String country;
+		 private String countrys;
 		 private String ages;
+		 private String positions;
 
-		public String  getId(){
-			return this.id;
+		public String  getIds(){
+			return this.ids;
 		}
-		public void  setId(String id){
-			 this.id = id;
+		public void  setIds(String ids){
+			 this.ids = ids;
 		}
 
-		public String  getName(){
-			return this.name;
+		public String  getNames(){
+			return this.names;
 		}
-		public void  setName(String name){
-			 this.name = name;
+		public void  setNames(String names){
+			 this.names = names;
 		}
 
 		public String  getEmails(){
@@ -27,11 +28,11 @@ public class SecondCsvObject {
 			 this.emails = emails;
 		}
 
-		public String  getCountry(){
-			return this.country;
+		public String  getCountrys(){
+			return this.countrys;
 		}
-		public void  setCountry(String country){
-			 this.country = country;
+		public void  setCountrys(String countrys){
+			 this.countrys = countrys;
 		}
 
 		public String  getAges(){
@@ -39,6 +40,13 @@ public class SecondCsvObject {
 		}
 		public void  setAges(String ages){
 			 this.ages = ages;
+		}
+
+		public String  getPositions(){
+			return this.positions;
+		}
+		public void  setPositions(String positions){
+			 this.positions = positions;
 		}
 
 }
