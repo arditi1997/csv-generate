@@ -12,7 +12,6 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,6 +31,7 @@ import sella.democsv.csvClassGenerated.FirstCsvObject;
 import sella.democsv.csvClassGenerated.SecondCsvObject;
 import sella.democsv.exception.EmptyFileException;
 import sella.democsv.exception.IncorrectFileNameException;
+import sella.democsv.mapper.CsvMapper;
 import sella.democsv.servcie.CsvService;
 import sella.democsv.validation.ValidatorUtils;
 
@@ -39,6 +39,12 @@ import sella.democsv.validation.ValidatorUtils;
 public class CsvServiceImpl implements CsvService {
 
     private static ApplicationProperties applicationProperties;
+    private static CsvMapper csvMapper;
+
+    @Autowired
+    public void setCsvMapper(CsvMapper csvMapper){
+        CsvServiceImpl.csvMapper = csvMapper;
+    }
 
     @Autowired
     public void setApplicationProperties(ApplicationProperties applicationProperties){
@@ -77,7 +83,7 @@ public class CsvServiceImpl implements CsvService {
     }
 
     @Override
-    public void setCsvData(List<FirstCsvObject> csvObjects) throws IOException {
+    public void setCsvData(List<FirstCsvObject> firstCsvObjects) throws IOException {
         ICsvBeanWriter csvWriter = new CsvBeanWriter(new FileWriter(applicationProperties.getFileName()), CsvPreference.STANDARD_PREFERENCE);
         final CellProcessor[] processors = getProcessors();
         Field[] fields = SecondCsvObject.class.getDeclaredFields();
@@ -89,9 +95,9 @@ public class CsvServiceImpl implements CsvService {
                 fields[4].getName(),
                 fields[5].getName()};
         csvWriter.writeHeader(csvHeader);
-        List<SecondCsvObject> newCsvObjects = mapNewCsvObject(csvObjects);
-        for (SecondCsvObject newCsvObject : newCsvObjects) {
-            csvWriter.write(newCsvObject, csvHeader, processors);
+        List<SecondCsvObject> secondCsvObjects = csvMapper.mapNewCsvObject(firstCsvObjects);
+        for (SecondCsvObject secondCsvObject : secondCsvObjects) {
+            csvWriter.write(secondCsvObject, csvHeader, processors);
         }
         csvWriter.close();
     }
@@ -167,7 +173,7 @@ public class CsvServiceImpl implements CsvService {
     }
 
     @Override
-    public void createNewCsv(String[] args) throws IOException {
+    public void createNewCsv(String[] args) throws IOException, IncorrectFileNameException, EmptyFileException {
         try {
             ValidatorUtils.validateArgs(args);
             File file = new File(args[0]);
@@ -179,26 +185,9 @@ public class CsvServiceImpl implements CsvService {
                     .build();
             List<FirstCsvObject> csvObjects = csvToBean.parse();
             setCsvData(csvObjects);
-        } catch (IOException e) {
+        } catch (IncorrectFileNameException | EmptyFileException | IOException e) {
             throw e;
-        } catch (IncorrectFileNameException | EmptyFileException e) {
-            throw new RuntimeException(e);
         }
-    }
-
-    public List<SecondCsvObject> mapNewCsvObject(List<FirstCsvObject> csvObjects){
-        List<SecondCsvObject> newCsvObjects = new ArrayList<>();
-        csvObjects.forEach(csvObject -> {
-            SecondCsvObject newCsvObject = new SecondCsvObject();
-            newCsvObject.setAges(String.valueOf(Integer.parseInt(csvObject.getAge() )* 100));
-            newCsvObject.setNames(csvObject.getName());
-            newCsvObject.setIds(csvObject.getId());
-            newCsvObject.setEmails(csvObject.getEmail());
-            newCsvObject.setCountrys(csvObject.getCountrys());
-            newCsvObject.setPositions(csvObject.getPosition());
-            newCsvObjects.add(newCsvObject);
-        });
-        return newCsvObjects;
     }
 
     private String getCsvClassName(int index){
